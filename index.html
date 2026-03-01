@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AXION — SaaS Productivity Suite</title>
+<meta name="description" content="Your ultimate productivity command center. Tasks, Calendar, Pomodoro, Analytics — all in one place.">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#6c63ff">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="splash"><div class="splash-logo">AXION</div></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">AXION</div>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <div class="nav-cta">
+    <button id="themeToggle" class="btn btn-ghost btn-sm">☀️</button>
+    <a href="login.html" class="btn btn-ghost btn-sm">Sign in</a>
+    <a href="login.html?tab=register" class="btn btn-primary btn-sm">Get Started →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span></span> Now with AI-powered insights</div>
+    <h1 class="hero-title">Your Productivity<br><span class="gradient-text">Command Center</span></h1>
+    <p class="hero-sub">AXION brings together tasks, calendar, focus timer, and deep analytics into one seamless, beautifully dark productivity suite.</p>
+    <div class="hero-actions">
+      <a href="login.html?tab=register" class="btn btn-primary btn-lg">Start Free Today →</a>
+      <a href="login.html" class="btn btn-ghost btn-lg">Sign In</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">10K+</div><div class="stat-label">Active Users</div></div>
+      <div class="stat"><div class="stat-num">500K+</div><div class="stat-label">Tasks Completed</div></div>
+      <div class="stat"><div class="stat-num">99.9%</div><div class="stat-label">Uptime</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FLOATING CARDS PREVIEW -->
+<div style="background:var(--bg-secondary);padding:4rem 2rem;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(108,99,255,0.05),transparent)"></div>
+  <div class="floating-cards" style="max-width:900px;margin:0 auto;position:relative;">
+    <div class="f-card" style="width:220px;">
+      <div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.5rem">Today's Tasks</div>
+      <div style="font-size:2rem;font-weight:900;color:var(--accent)">0</div>
+      <div style="font-size:0.8rem;color:var(--text-secondary)">pending tasks</div>
+      <div style="margin-top:1rem;height:4px;background:var(--border);border-radius:100px"><div style="width:0%;height:100%;background:var(--accent);border-radius:100px"></div></div>
+    </div>
+    <div class="f-card" style="width:220px;margin-top:2rem;">
+      <div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.5rem">Focus Timer</div>
+      <div style="font-size:2rem;font-weight:900;font-variant-numeric:tabular-nums">25:00</div>
+      <div style="font-size:0.8rem;color:var(--text-secondary)">ready to start</div>
+      <div style="margin-top:0.75rem;display:flex;gap:0.25rem">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--border)"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--border)"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--border)"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--border)"></div>
+      </div>
+    </div>
+    <div class="f-card" style="width:220px;">
+      <div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.5rem">Streak</div>
+      <div style="font-size:2rem;font-weight:900;color:#ffa502">0 🔥</div>
+      <div style="font-size:0.8rem;color:var(--text-secondary)">days active</div>
+      <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--text-muted)">Complete tasks to build streak</div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="reveal">
+    <div class="section-tag">Features</div>
+    <h2 class="section-title">Everything you need to <span class="gradient-text">stay in flow</span></h2>
+    <p class="section-sub">A complete productivity system designed for makers, builders, and high performers.</p>
+  </div>
+  <div class="features-grid" style="margin-top:3rem">
+    <div class="feature-card reveal">
+      <div class="feature-icon">📋</div>
+      <div class="feature-title">Smart Task Manager</div>
+      <div class="feature-desc">Full CRUD task management with priorities, categories, due dates, and filters. Stay on top of every commitment.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">📅</div>
+      <div class="feature-title">Weekly Calendar</div>
+      <div class="feature-desc">Plan your week visually. Add events, switch between monthly and weekly views, and never miss a meeting.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🍅</div>
+      <div class="feature-title">Pomodoro Timer</div>
+      <div class="feature-desc">Built-in Pomodoro technique with customizable focus/break intervals. Track sessions and build deep work habits.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">📊</div>
+      <div class="feature-title">Analytics Dashboard</div>
+      <div class="feature-desc">Visual charts showing your productivity trends, task completion rates, focus time, and category breakdowns.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🔥</div>
+      <div class="feature-title">Streak System</div>
+      <div class="feature-desc">Build daily productivity habits with streak tracking. Celebrate milestones and maintain momentum.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">💾</div>
+      <div class="feature-title">Backup & Restore</div>
+      <div class="feature-desc">Export all your data as JSON, import it back anytime. Your data, your control — completely offline capable.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🌗</div>
+      <div class="feature-title">Dark & Light Mode</div>
+      <div class="feature-desc">Gorgeous glassmorphism design that looks stunning in both dark and light themes. Easy on the eyes, day or night.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">📱</div>
+      <div class="feature-title">Installable PWA</div>
+      <div class="feature-desc">Install AXION as a native app on any device. Works fully offline. No app store required.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🔔</div>
+      <div class="feature-title">Toast Notifications</div>
+      <div class="feature-desc">Contextual notifications with sound effects keep you informed of task completions, streak milestones, and more.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section" id="pricing" style="background:var(--bg-secondary);max-width:100%;padding:6rem 2rem;">
+  <div style="max-width:1100px;margin:0 auto">
+  <div class="reveal" style="text-align:center">
+    <div class="section-tag">Pricing</div>
+    <h2 class="section-title">Simple, transparent pricing</h2>
+    <p class="section-sub" style="margin:0 auto">No hidden fees. No credit card required to start.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="pricing-card reveal">
+      <div class="pricing-plan">Free</div>
+      <div class="pricing-price">$0<span>/mo</span></div>
+      <div class="pricing-desc">Perfect for getting started</div>
+      <ul class="pricing-features">
+        <li>Unlimited tasks</li>
+        <li>Weekly calendar</li>
+        <li>Pomodoro timer</li>
+        <li>Basic analytics</li>
+        <li>LocalStorage backup</li>
+      </ul>
+      <a href="login.html?tab=register" class="btn btn-ghost" style="width:100%;justify-content:center">Get Started Free</a>
+    </div>
+    <div class="pricing-card featured reveal">
+      <div class="pricing-plan">Pro</div>
+      <div class="pricing-price">$9<span>/mo</span></div>
+      <div class="pricing-desc">For serious productivity hackers</div>
+      <ul class="pricing-features">
+        <li>Everything in Free</li>
+        <li>Advanced analytics</li>
+        <li>Priority support</li>
+        <li>Custom themes</li>
+        <li>Data export</li>
+        <li>Team features</li>
+      </ul>
+      <a href="login.html?tab=register" class="btn btn-primary" style="width:100%;justify-content:center">Start Pro Trial</a>
+    </div>
+    <div class="pricing-card reveal">
+      <div class="pricing-plan">Team</div>
+      <div class="pricing-price">$29<span>/mo</span></div>
+      <div class="pricing-desc">For teams that get things done</div>
+      <ul class="pricing-features">
+        <li>Everything in Pro</li>
+        <li>5 team members</li>
+        <li>Shared workspaces</li>
+        <li>Team analytics</li>
+        <li>API access</li>
+      </ul>
+      <a href="login.html?tab=register" class="btn btn-ghost" style="width:100%;justify-content:center">Contact Sales</a>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center">
+    <div>
+      <div class="section-tag">About AXION</div>
+      <h2 class="section-title">Built for the <span class="gradient-text">focused mind</span></h2>
+      <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:1.5rem">AXION is a fully offline, privacy-first productivity suite. Your data stays on your device — no servers, no tracking, no subscriptions required to use the core product.</p>
+      <p style="color:var(--text-secondary);line-height:1.8">Built with pure HTML, CSS, and JavaScript. No frameworks. No bloat. Just a fast, beautiful tool that respects your time and data.</p>
+      <div style="margin-top:2rem;display:flex;gap:2rem">
+        <div><div style="font-size:1.5rem;font-weight:900;color:var(--accent)">100%</div><div style="font-size:0.8rem;color:var(--text-muted)">Offline capable</div></div>
+        <div><div style="font-size:1.5rem;font-weight:900;color:var(--accent)">0KB</div><div style="font-size:0.8rem;color:var(--text-muted)">Data sent to servers</div></div>
+        <div><div style="font-size:1.5rem;font-weight:900;color:var(--accent)">Open</div><div style="font-size:0.8rem;color:var(--text-muted)">Source code</div></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+      <div class="feature-card" style="text-align:center;padding:2rem 1rem">
+        <div style="font-size:2rem;margin-bottom:0.5rem">🔒</div>
+        <div style="font-weight:700;margin-bottom:0.3rem">Privacy First</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary)">All data stays local</div>
+      </div>
+      <div class="feature-card" style="text-align:center;padding:2rem 1rem;margin-top:1.5rem">
+        <div style="font-size:2rem;margin-bottom:0.5rem">⚡</div>
+        <div style="font-weight:700;margin-bottom:0.3rem">Blazing Fast</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary)">No network latency</div>
+      </div>
+      <div class="feature-card" style="text-align:center;padding:2rem 1rem">
+        <div style="font-size:2rem;margin-bottom:0.5rem">🎨</div>
+        <div style="font-weight:700;margin-bottom:0.3rem">Beautiful UI</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary)">Dark glassmorphism</div>
+      </div>
+      <div class="feature-card" style="text-align:center;padding:2rem 1rem;margin-top:1.5rem">
+        <div style="font-size:2rem;margin-bottom:0.5rem">📲</div>
+        <div style="font-weight:700;margin-bottom:0.3rem">PWA Ready</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary)">Install anywhere</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding:6rem 2rem;text-align:center;background:var(--bg-secondary);position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(108,99,255,0.1),transparent)"></div>
+  <div style="position:relative">
+    <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:900;letter-spacing:-1px;margin-bottom:1rem">Ready to <span class="gradient-text">supercharge</span> your day?</h2>
+    <p style="color:var(--text-secondary);margin-bottom:2rem;font-size:1.1rem">Join thousands of productive people using AXION every day.</p>
+    <a href="login.html?tab=register" class="btn btn-primary btn-lg">Get Started — It's Free →</a>
+  </div>
+</section>
+
+<footer>
+  <div><span style="background:linear-gradient(135deg,#6c63ff,#ff6584);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900">AXION</span> © 2025 — Your Productivity Suite</div>
+  <div>Built with ❤️ and zero frameworks</div>
+</footer>
+
+<div id="toast-container"></div>
+<script src="js/app.js"></script>
+</body>
+</html>

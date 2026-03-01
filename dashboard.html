@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — AXION</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<style>
+.heatmap-cell{width:12px;height:12px;border-radius:2px;background:var(--border);transition:var(--transition)}
+.heatmap-cell.active{background:var(--accent)}
+#streakHeatmap{display:flex;flex-wrap:wrap;gap:3px;margin-top:0.75rem}
+.pom-mini-ring{display:flex;justify-content:center;margin-bottom:1rem}
+.upcoming-event{display:flex;gap:0.75rem;padding:0.5rem;border-radius:var(--radius-sm);border-bottom:1px solid var(--border);align-items:center}
+.upcoming-event:last-child{border:none}
+.event-color-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+</style>
+</head>
+<body>
+<div id="splash"><div class="splash-logo">AXION</div></div>
+
+<!-- ONBOARDING -->
+<div id="onboarding">
+  <div class="onboarding-box">
+    <div id="step1" class="onboarding-step active">
+      <div class="onboarding-emoji">🚀</div>
+      <div class="onboarding-title">Welcome to AXION!</div>
+      <div class="onboarding-desc">Your all-in-one productivity command center. Let's take a quick tour of what you can do.</div>
+      <div class="onboarding-dots">
+        <div class="onboarding-dot active"></div>
+        <div class="onboarding-dot"></div>
+        <div class="onboarding-dot"></div>
+      </div>
+      <button class="btn btn-primary btn-lg" onclick="nextOnboarding()">Next →</button>
+    </div>
+    <div id="step2" class="onboarding-step">
+      <div class="onboarding-emoji">📋</div>
+      <div class="onboarding-title">Tasks & Calendar</div>
+      <div class="onboarding-desc">Add tasks with priorities and due dates. Plan your week with the calendar view.</div>
+      <div class="onboarding-dots">
+        <div class="onboarding-dot"></div>
+        <div class="onboarding-dot active"></div>
+        <div class="onboarding-dot"></div>
+      </div>
+      <button class="btn btn-primary btn-lg" onclick="nextOnboarding()">Next →</button>
+    </div>
+    <div id="step3" class="onboarding-step">
+      <div class="onboarding-emoji">🔥</div>
+      <div class="onboarding-title">Build Streaks!</div>
+      <div class="onboarding-desc">Complete at least one task daily to maintain your streak. Milestones unlock at 3, 7, 14, and 30 days!</div>
+      <div class="onboarding-dots">
+        <div class="onboarding-dot"></div>
+        <div class="onboarding-dot"></div>
+        <div class="onboarding-dot active"></div>
+      </div>
+      <button class="btn btn-primary btn-lg" onclick="finishOnboarding()">Let's Go! 🚀</button>
+    </div>
+  </div>
+</div>
+
+<div class="app-layout" id="dashboardPage">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">AXION</div>
+      <span class="sidebar-version">v1.0</span>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Main</div>
+      <ul class="sidebar-nav">
+        <li><a href="dashboard.html" class="sidebar-link active"><span class="sidebar-icon">🏠</span>Dashboard</a></li>
+        <li><a href="tasks.html" class="sidebar-link"><span class="sidebar-icon">📋</span>Tasks <span class="sidebar-badge" id="sidebarTaskBadge">0</span></a></li>
+        <li><a href="calendar.html" class="sidebar-link"><span class="sidebar-icon">📅</span>Calendar</a></li>
+        <li><a href="pomodoro.html" class="sidebar-link"><span class="sidebar-icon">🍅</span>Pomodoro</a></li>
+        <li><a href="analytics.html" class="sidebar-link"><span class="sidebar-icon">📊</span>Analytics</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Account</div>
+      <ul class="sidebar-nav">
+        <li><a href="settings.html" class="sidebar-link"><span class="sidebar-icon">⚙️</span>Settings</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-footer">
+      <a href="settings.html" class="user-card">
+        <div class="user-avatar">U</div>
+        <div>
+          <div class="user-name">Loading...</div>
+          <div class="user-plan">Free Plan</div>
+        </div>
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="page-title">Dashboard</div>
+        <div class="page-subtitle" id="dashGreeting">Good morning! Ready to crush it today?</div>
+      </div>
+      <div class="topbar-right">
+        <button id="themeToggle" class="topbar-btn topbar-theme">☀️</button>
+        <button class="topbar-btn" onclick="window.location.href='settings.html'">⚙️ Settings</button>
+        <button id="mobileMenuBtn" class="mobile-menu-btn">☰</button>
+      </div>
+    </div>
+
+    <!-- STREAK -->
+    <div class="streak-display">
+      <div class="streak-fire">🔥</div>
+      <div class="streak-info">
+        <div class="streak-count"><span id="streakCount">0</span> day streak</div>
+        <div id="streakLabel" class="streak-label">Complete a task to start your streak!</div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-card-icon">📋</div>
+        <div class="stat-card-value" id="statPending">0</div>
+        <div class="stat-card-label">Pending Tasks</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-icon">✅</div>
+        <div class="stat-card-value" id="statDone">0</div>
+        <div class="stat-card-label">Completed Today</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-icon">⚠️</div>
+        <div class="stat-card-value" id="statOverdue">0</div>
+        <div class="stat-card-label">Overdue</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-icon">📅</div>
+        <div class="stat-card-value" id="statTotal">0</div>
+        <div class="stat-card-label">Total Tasks</div>
+      </div>
+    </div>
+
+    <!-- QUICK ADD -->
+    <div class="quick-add">
+      <span style="font-size:1.2rem">✏️</span>
+      <input type="text" id="quickAddInput" class="quick-add-input" placeholder="Quick add a task... (press Enter)">
+      <button id="quickAddBtn" class="btn btn-primary btn-sm">Add</button>
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="dashboard-grid">
+      <!-- Recent Tasks -->
+      <div class="card">
+        <div class="card-title">
+          Recent Tasks
+          <a href="tasks.html" style="font-size:0.75rem;color:var(--accent);text-decoration:none;font-weight:600">View All →</a>
+        </div>
+        <div id="recentTasksList"></div>
+      </div>
+
+      <!-- Right Column -->
+      <div>
+        <!-- Pomodoro Mini -->
+        <div class="card" style="margin-bottom:1rem">
+          <div class="card-title">Focus Timer</div>
+          <div class="pomodoro-mini">
+            <div class="pomodoro-time" id="miniPomTime">25:00</div>
+            <div class="pomodoro-phase">Ready to focus</div>
+            <a href="pomodoro.html" class="btn btn-primary btn-sm" style="margin-top:0.5rem">Open Timer →</a>
+          </div>
+        </div>
+
+        <!-- Upcoming Events -->
+        <div class="card">
+          <div class="card-title">
+            Upcoming Events
+            <a href="calendar.html" style="font-size:0.75rem;color:var(--accent);text-decoration:none;font-weight:600">View →</a>
+          </div>
+          <div id="upcomingEvents"></div>
+        </div>
+      </div>
+
+      <!-- Streak Heatmap -->
+      <div class="card dashboard-grid-full">
+        <div class="card-title">Activity — Last 28 Days</div>
+        <div id="streakHeatmap"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- TASK MODAL -->
+<div id="taskModal" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="taskModalTitle">+ New Task</div>
+      <button class="modal-close" id="closeTaskModal">✕</button>
+    </div>
+    <form id="taskForm">
+      <div class="form-group"><label class="form-label">Title *</label><input type="text" id="taskTitle" class="form-input" placeholder="What needs to be done?" required></div>
+      <div class="form-group"><label class="form-label">Description</label><textarea id="taskDescription" class="form-textarea" placeholder="Add more details..."></textarea></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+        <div class="form-group"><label class="form-label">Priority</label>
+          <select id="taskPriority" class="form-select">
+            <option value="high">🔴 High</option>
+            <option value="medium" selected>🟡 Medium</option>
+            <option value="low">🟢 Low</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Category</label>
+          <select id="taskCategory" class="form-select">
+            <option value="general">General</option>
+            <option value="work">Work</option>
+            <option value="personal">Personal</option>
+            <option value="health">Health</option>
+            <option value="learning">Learning</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Due Date</label><input type="date" id="taskDueDate" class="form-input"></div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Save Task</button>
+    </form>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="js/app.js"></script>
+<script src="js/streak.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/tasks.js"></script>
+<script>
+let onboardingStep = 1;
+function nextOnboarding() {
+  document.getElementById('step'+onboardingStep).classList.remove('active');
+  onboardingStep++;
+  document.getElementById('step'+onboardingStep)?.classList.add('active');
+}
+function finishOnboarding() {
+  document.getElementById('onboarding').classList.remove('open');
+  localStorage.removeItem('axion_first_launch');
+  playSound('success');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const user = requireAuth();
+  if (!user) return;
+
+  // Greeting
+  const h = new Date().getHours();
+  const greet = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+  document.getElementById('dashGreeting').textContent = `${greet}, ${user.name}! 👋`;
+
+  // Onboarding
+  if (localStorage.getItem('axion_first_launch')) {
+    document.getElementById('onboarding').classList.add('open');
+  }
+
+  // Sidebar task badge
+  const stats = TaskManager.getStats();
+  const badge = document.getElementById('sidebarTaskBadge');
+  if (badge) { badge.textContent = stats.pending; badge.style.display = stats.pending > 0 ? '' : 'none'; }
+
+  // Upcoming events
+  const evContainer = document.getElementById('upcomingEvents');
+  if (evContainer) {
+    const today = new Date().toISOString().split('T')[0];
+    const allEvents = JSON.parse(localStorage.getItem('axion_events') || '[]');
+    const upcoming = allEvents.filter(e => e.date >= today).sort((a,b) => a.date.localeCompare(b.date)).slice(0, 4);
+    const catColors = { work:'#8b83ff', personal:'#ff8099', health:'#43e97b', other:'#ffa502' };
+    if (upcoming.length === 0) {
+      evContainer.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📅</div><div class="empty-state-title">No upcoming events</div></div>';
+    } else {
+      evContainer.innerHTML = upcoming.map(e => `
+        <div class="upcoming-event">
+          <div class="event-color-dot" style="background:${catColors[e.category]||'#6c63ff'}"></div>
+          <div style="flex:1"><div style="font-size:0.85rem;font-weight:600">${e.title}</div><div style="font-size:0.75rem;color:var(--text-muted)">${e.date}${e.time?' · '+e.time:''}</div></div>
+        </div>
+      `).join('');
+    }
+  }
+
+  // Mini pomodoro timer
+  const pomState = JSON.parse(localStorage.getItem('axion_pomodoro_state') || '{}');
+  const pomTimeEl = document.getElementById('miniPomTime');
+  if (pomTimeEl && pomState.settings) {
+    const min = (pomState.settings.focus || 25).toString().padStart(2,'0');
+    pomTimeEl.textContent = `${min}:00`;
+  }
+});
+</script>
+</body>
+</html>

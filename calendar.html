@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendar — AXION</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/calendar.css">
+</head>
+<body>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<div class="dashboard-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header"><a href="index.html" class="sidebar-logo">AXION</a></div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Main</div>
+        <a href="dashboard.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> Dashboard</a>
+        <a href="tasks.html" class="sidebar-link"><span class="sidebar-link-icon">✅</span> Tasks</a>
+        <a href="calendar.html" class="sidebar-link active"><span class="sidebar-link-icon">📅</span> Calendar</a>
+        <a href="pomodoro.html" class="sidebar-link"><span class="sidebar-link-icon">⏱️</span> Pomodoro</a>
+        <a href="analytics.html" class="sidebar-link"><span class="sidebar-link-icon">📊</span> Analytics</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Account</div>
+        <a href="settings.html" class="sidebar-link"><span class="sidebar-link-icon">⚙️</span> Settings</a>
+        <a href="#" class="sidebar-link" id="logout-btn"><span class="sidebar-link-icon">🚪</span> Logout</a>
+      </div>
+    </nav>
+    <div class="sidebar-streak">
+      <div class="sidebar-streak-inner">
+        <span class="streak-flame">🔥</span>
+        <div class="streak-text-wrap">
+          <div class="streak-count" id="streak-count">0</div>
+          <div class="streak-label">day streak</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+        <h1 class="topbar-title">Calendar</h1>
+      </div>
+      <div class="topbar-right">
+        <button class="topbar-btn" id="theme-toggle">☀️</button>
+        <div class="topbar-avatar" id="topbar-avatar" onclick="location.href='settings.html'">U</div>
+      </div>
+    </header>
+    <div class="page-content">
+      <div class="calendar-header">
+        <div class="calendar-nav">
+          <button class="btn btn-ghost btn-sm btn-icon" id="cal-prev">‹</button>
+          <h2 class="calendar-month-title" id="cal-month-title">Month Year</h2>
+          <button class="btn btn-ghost btn-sm btn-icon" id="cal-next">›</button>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-ghost btn-sm" id="cal-today">Today</button>
+          <button class="btn btn-primary btn-sm" id="add-event-btn">+ Event</button>
+        </div>
+      </div>
+      <div class="calendar-grid-header">
+        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+      </div>
+      <div class="calendar-grid" id="cal-grid"></div>
+      <div style="margin-top:28px;">
+        <h3 style="font-size:15px;font-weight:700;margin-bottom:16px;" id="selected-day-title">Events</h3>
+        <div class="selected-day-events" id="selected-day-events"></div>
+      </div>
+    </div>
+  </main>
+</div>
+<div class="modal-overlay" id="event-modal" style="display:none">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="event-modal-title">Add Event</h2>
+      <button class="modal-close" id="event-modal-close">✕</button>
+    </div>
+    <form id="event-form">
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="form-group"><label>Event Title *</label><input class="input" id="event-title" type="text" placeholder="What's happening?" required></div>
+        <div class="form-row">
+          <div class="form-group"><label>Date *</label><input class="input" id="event-date" type="date" required></div>
+          <div class="form-group"><label>Color</label><select class="select" id="event-color"><option value="personal">🟣 Personal</option><option value="work">🔵 Work</option><option value="health">🟢 Health</option><option value="urgent">🔴 Urgent</option></select></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Start Time</label><input class="input" id="event-time" type="time"></div>
+          <div class="form-group"><label>End Time</label><input class="input" id="event-end-time" type="time"></div>
+        </div>
+        <div class="form-group"><label>Notes</label><textarea class="textarea" id="event-desc" placeholder="Event details…"></textarea></div>
+        <div style="display:flex;gap:12px;justify-content:flex-end;">
+          <button type="button" class="btn btn-ghost" onclick="document.getElementById('event-modal').style.display='none'">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Event</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div id="toast-container"></div>
+<script src="js/app.js"></script>
+<script src="js/streak.js"></script>
+<script src="js/calendar.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (!requireAuth()) return;
+  initSidebar();
+  initTopbarUser();
+  renderStreakUI();
+});
+</script>
+</body>
+</html>

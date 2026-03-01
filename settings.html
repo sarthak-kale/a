@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings — AXION</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<style>
+.settings-section{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.settings-section-title{font-size:0.875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-secondary);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.5rem}
+.settings-row{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 0;border-bottom:1px solid var(--border)}
+.settings-row:last-child{border:none}
+.settings-row-label{font-size:0.875rem}
+.settings-row-sub{font-size:0.75rem;color:var(--text-muted);margin-top:0.15rem}
+.toggle-switch{position:relative;width:44px;height:24px}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;cursor:pointer;inset:0;background:var(--border);border-radius:100px;transition:0.3s}
+.toggle-slider::before{content:'';position:absolute;width:18px;height:18px;left:3px;bottom:3px;background:white;border-radius:50%;transition:0.3s}
+input:checked+.toggle-slider{background:var(--accent)}
+input:checked+.toggle-slider::before{transform:translateX(20px)}
+.avatar-wrap{display:flex;align-items:center;gap:1.5rem;margin-bottom:1.5rem}
+.avatar-large{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#6c63ff,#ff6584);display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:700;color:white;overflow:hidden;flex-shrink:0;border:3px solid var(--border)}
+.avatar-large img{width:100%;height:100%;object-fit:cover}
+</style>
+</head>
+<body>
+<div class="app-layout" id="settingsPage">
+  <aside class="sidebar">
+    <div class="sidebar-header"><div class="sidebar-logo">AXION</div><span class="sidebar-version">v1.0</span></div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Main</div>
+      <ul class="sidebar-nav">
+        <li><a href="dashboard.html" class="sidebar-link"><span class="sidebar-icon">🏠</span>Dashboard</a></li>
+        <li><a href="tasks.html" class="sidebar-link"><span class="sidebar-icon">📋</span>Tasks</a></li>
+        <li><a href="calendar.html" class="sidebar-link"><span class="sidebar-icon">📅</span>Calendar</a></li>
+        <li><a href="pomodoro.html" class="sidebar-link"><span class="sidebar-icon">🍅</span>Pomodoro</a></li>
+        <li><a href="analytics.html" class="sidebar-link"><span class="sidebar-icon">📊</span>Analytics</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-section">
+      <ul class="sidebar-nav">
+        <li><a href="settings.html" class="sidebar-link active"><span class="sidebar-icon">⚙️</span>Settings</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-footer">
+      <a href="settings.html" class="user-card">
+        <div class="user-avatar">U</div>
+        <div><div class="user-name">Loading...</div><div class="user-plan">Free Plan</div></div>
+      </a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div><div class="page-title">Settings</div><div class="page-subtitle">Customize your AXION experience</div></div>
+      <div class="topbar-right">
+        <button id="themeToggle" class="topbar-btn topbar-theme">☀️</button>
+        <button id="mobileMenuBtn" class="mobile-menu-btn">☰</button>
+      </div>
+    </div>
+
+    <div style="max-width:700px">
+      <!-- Profile -->
+      <div class="settings-section">
+        <div class="settings-section-title">👤 Profile</div>
+        <div class="avatar-wrap">
+          <div class="avatar-large" id="avatarDisplay">
+            <img id="avatarPreview" src="" alt="" style="display:none" onerror="this.style.display='none'">
+            <span id="avatarInitial">U</span>
+          </div>
+          <div>
+            <button id="changeAvatarBtn" class="btn btn-ghost btn-sm">📷 Change Photo</button>
+            <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem">JPG, PNG up to 2MB</div>
+            <input type="file" id="avatarInput" accept="image/*" style="display:none">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div class="form-group"><label class="form-label">Display Name</label><input type="text" id="profileName" class="form-input" placeholder="Your name"></div>
+          <div class="form-group"><label class="form-label">Email</label><input type="email" id="profileEmail" class="form-input" readonly style="opacity:0.6;cursor:not-allowed"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Bio</label><textarea id="profileBio" class="form-textarea" placeholder="A short bio..."></textarea></div>
+        <div class="form-group"><label class="form-label">Timezone</label><input type="text" id="profileTimezone" class="form-input" placeholder="Auto-detected"></div>
+        <button id="saveProfileBtn" class="btn btn-primary">Save Profile</button>
+      </div>
+
+      <!-- Preferences -->
+      <div class="settings-section">
+        <div class="settings-section-title">🎨 Preferences</div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Dark Mode</div><div class="settings-row-sub">Toggle between dark and light theme</div></div>
+          <button id="themeToggle2" class="btn btn-ghost btn-sm" onclick="ThemeManager.toggle()">🌙 Toggle Theme</button>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">UI Sound Effects</div><div class="settings-row-sub">Play sounds on interactions</div></div>
+          <label class="toggle-switch"><input type="checkbox" id="soundToggle" checked><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+
+      <!-- Data Management -->
+      <div class="settings-section">
+        <div class="settings-section-title">💾 Data Management</div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Export Data</div><div class="settings-row-sub">Download all your data as JSON</div></div>
+          <button id="exportBtn" class="btn btn-ghost btn-sm">⬇️ Export Backup</button>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Import Data</div><div class="settings-row-sub">Restore from a JSON backup file</div></div>
+          <button id="importBtn" class="btn btn-ghost btn-sm">⬆️ Import Backup</button>
+          <input type="file" id="importInput" accept=".json" style="display:none">
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label" style="color:#ff4757">Clear All Data</div><div class="settings-row-sub">Permanently delete all tasks, events, and settings</div></div>
+          <button id="clearDataBtn" class="btn btn-danger btn-sm">🗑️ Clear All</button>
+        </div>
+      </div>
+
+      <!-- App Info -->
+      <div class="settings-section">
+        <div class="settings-section-title">ℹ️ About AXION</div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Version</div></div>
+          <span class="badge badge-purple">v1.0.0</span>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Storage Type</div><div class="settings-row-sub">All data is stored locally on your device</div></div>
+          <span class="badge badge-green">LocalStorage</span>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">PWA Status</div></div>
+          <span id="pwaStatus" class="badge badge-blue">Checking...</span>
+        </div>
+        <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)">
+          <button id="logoutBtn" class="btn btn-danger" style="width:100%;justify-content:center">🚪 Sign Out</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="toast-container"></div>
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/profile.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // PWA status
+  const pwaEl = document.getElementById('pwaStatus');
+  if ('serviceWorker' in navigator && window.matchMedia('(display-mode: standalone)').matches) {
+    if (pwaEl) { pwaEl.textContent = 'Installed'; pwaEl.className = 'badge badge-green'; }
+  } else {
+    if (pwaEl) pwaEl.textContent = 'Browser Mode';
+  }
+
+  // Avatar display
+  const savedProfile = JSON.parse(localStorage.getItem('axion_profile') || '{}');
+  const user = JSON.parse(localStorage.getItem('axion_user') || '{}');
+  const initEl = document.getElementById('avatarInitial');
+  const prevEl = document.getElementById('avatarPreview');
+  if (savedProfile.avatar) {
+    if (prevEl) { prevEl.src = savedProfile.avatar; prevEl.style.display = 'block'; }
+    if (initEl) initEl.style.display = 'none';
+  } else {
+    if (initEl) initEl.textContent = (user.name || 'U')[0].toUpperCase();
+  }
+
+  document.getElementById('avatarInput')?.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      if (prevEl) { prevEl.src = ev.target.result; prevEl.style.display = 'block'; }
+      if (initEl) initEl.style.display = 'none';
+      ProfileManager.updateAvatar(ev.target.result);
+      Toast.show('Avatar updated!', 'success');
+    };
+    reader.readAsDataURL(file);
+  });
+});
+</script>
+</body>
+</html>

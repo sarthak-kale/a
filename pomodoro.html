@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pomodoro — AXION</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/pomodoro.css">
+</head>
+<body>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<div class="dashboard-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header"><a href="index.html" class="sidebar-logo">AXION</a></div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Main</div>
+        <a href="dashboard.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> Dashboard</a>
+        <a href="tasks.html" class="sidebar-link"><span class="sidebar-link-icon">✅</span> Tasks</a>
+        <a href="calendar.html" class="sidebar-link"><span class="sidebar-link-icon">📅</span> Calendar</a>
+        <a href="pomodoro.html" class="sidebar-link active"><span class="sidebar-link-icon">⏱️</span> Pomodoro</a>
+        <a href="analytics.html" class="sidebar-link"><span class="sidebar-link-icon">📊</span> Analytics</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Account</div>
+        <a href="settings.html" class="sidebar-link"><span class="sidebar-link-icon">⚙️</span> Settings</a>
+        <a href="#" class="sidebar-link" id="logout-btn"><span class="sidebar-link-icon">🚪</span> Logout</a>
+      </div>
+    </nav>
+    <div class="sidebar-streak">
+      <div class="sidebar-streak-inner">
+        <span class="streak-flame">🔥</span>
+        <div class="streak-text-wrap">
+          <div class="streak-count" id="streak-count">0</div>
+          <div class="streak-label">day streak</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+        <h1 class="topbar-title">Pomodoro Timer</h1>
+      </div>
+      <div class="topbar-right">
+        <button class="topbar-btn" id="theme-toggle">☀️</button>
+        <div class="topbar-avatar" id="topbar-avatar" onclick="location.href='settings.html'">U</div>
+      </div>
+    </header>
+    <div class="page-content">
+      <div class="pomodoro-container">
+        <div class="pomodoro-card">
+          <div class="pomodoro-modes">
+            <button class="pomo-mode-btn active" data-mode="work">🍅 Focus</button>
+            <button class="pomo-mode-btn" data-mode="short">☕ Short Break</button>
+            <button class="pomo-mode-btn" data-mode="long">🛋️ Long Break</button>
+          </div>
+          <div class="timer-ring-wrap">
+            <svg class="timer-ring-svg" viewBox="0 0 200 200">
+              <defs>
+                <linearGradient id="ring-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style="stop-color:#6c63ff"/>
+                  <stop offset="100%" style="stop-color:#a78bfa"/>
+                </linearGradient>
+              </defs>
+              <circle class="timer-ring-track" cx="100" cy="100" r="88"/>
+              <circle class="timer-ring-progress" id="timer-ring-progress" cx="100" cy="100" r="88"/>
+            </svg>
+            <div class="timer-display">
+              <div class="timer-time" id="timer-time">25:00</div>
+              <div class="timer-mode-label" id="timer-mode-label">FOCUS</div>
+            </div>
+          </div>
+          <div class="timer-controls">
+            <button class="timer-btn" id="timer-reset-btn" title="Reset">↺</button>
+            <button class="timer-btn timer-btn-main" id="timer-play-btn" title="Play/Pause">▶</button>
+            <button class="timer-btn" id="timer-skip-btn" title="Skip">⏭</button>
+          </div>
+          <div class="session-info">
+            <span class="session-stat">Today: <strong id="pomo-today">0</strong> 🍅</span>
+            <span class="session-stat">Total: <strong id="pomo-total">0</strong> 🍅</span>
+          </div>
+        </div>
+        <div class="pomo-settings-row">
+          <div class="card"><label>Focus (min)</label><input type="number" id="pomo-work-mins" value="25" min="1" max="90"></div>
+          <div class="card"><label>Short Break</label><input type="number" id="pomo-short-mins" value="5" min="1" max="30"></div>
+          <div class="card"><label>Long Break</label><input type="number" id="pomo-long-mins" value="15" min="1" max="60"></div>
+        </div>
+        <div class="pomodoro-log">
+          <div class="pomo-log-header">📋 Session History</div>
+          <div class="pomo-log-list" id="pomo-log-list">
+            <div class="pomo-log-item" style="color:var(--text-muted)">No sessions yet. Start your first focus session!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<div id="toast-container"></div>
+<script src="js/app.js"></script>
+<script src="js/streak.js"></script>
+<script src="js/pomodoro.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (!requireAuth()) return;
+  initSidebar();
+  initTopbarUser();
+  renderStreakUI();
+});
+</script>
+</body>
+</html>
